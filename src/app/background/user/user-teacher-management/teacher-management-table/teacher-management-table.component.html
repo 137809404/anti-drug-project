@@ -1,0 +1,48 @@
+<div class="content">
+  <div class="filter-condition">
+    <div class="time-filter">
+      <input class="name-containing-input" nz-input placeholder="用户名" [(ngModel)]="inputValue" />
+      <button (click)="search()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    </div>
+    <div></div>
+  </div>
+  <nz-divider [nzText]="'教师总数： ' + total"></nz-divider>
+  <nz-table
+    #teacherListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>用户名</th>
+      <th>推荐教师</th>
+      <th>最近登录</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of teacherListTable.data">
+      <td>{{data.nickName}}</td>
+      <td *ngIf= "data.promoted == 1">
+        <nz-tag [nzColor]="'#108ee9'">荐:{{data.promotedTimeString}}/序号:{{data.promotedSeq}}</nz-tag></td>
+      <td *ngIf= "data.promoted == 0">否</td>
+      <td>{{data.loginTimeString}}<br/>
+        <span>{{data.loginIp}}, </span><span>{{data.loginIpArea}}</span></td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="viewUserInfo(data.id)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看</span></div>
+          <div>
+            <span *ngIf="data.promoted == 0" (click)="setRecommendation(data.id)"><i nz-icon nzType="edit" nzTheme="outline"></i>设置推荐</span>
+            <span *ngIf="data.promoted == 1" (click)="cancelRecommendation(data.id)"><i nz-icon nzType="close-circle" nzTheme="outline"></i>取消推荐</span>
+          </div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

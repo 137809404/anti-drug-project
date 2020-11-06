@@ -1,0 +1,39 @@
+<nz-list
+      class="demo-loadmore-list"
+      [nzDataSource]="recordList"
+      [nzItemLayout]="'horizontal'"
+      [nzRenderItem]="item"
+      [nzBordered]="true"
+    >
+      <ng-template #item let-item>
+        <nz-list-item
+          [nzContent]="score"
+          [nzActions]="[editAction]"
+        >
+          <nz-skeleton [nzActive]="true" [nzLoading]="item.loading">
+            <ng-template #score>
+              <div>得分<span style="color: gold; font-weight: bold">{{item.score}}</span>分</div></ng-template>
+            <ng-template #editAction>
+              <div class="question-title" (click)="navigatTo('client/testpaper/'+ item.testId +'/result/'+userId)">查看结果</div>
+            </ng-template>
+            
+            <nz-list-item-meta
+              [nzTitle]="nzTitle"
+              [nzDescription]="nzDescription"
+            >
+              <ng-template #nzTitle>
+                <div >{{ item.paperName }}</div>
+              </ng-template>
+              <ng-template #nzDescription>
+                <div >来自课程<span style="cursor: pointer; color: #108ee9">《{{ item.courseSetTitle}}》</span>计划<span style="cursor: pointer; color: #108ee9">《{{item.courseTitle}}》</span> · {{item.createdTimeString}}</div>
+              </ng-template>
+
+            </nz-list-item-meta>
+          </nz-skeleton>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+
+<div style="display: flex; flex-direction: row; justify-content: flex-end; margin-top: 5%;">
+  <nz-pagination [nzPageIndex]="pageIndex" [nzTotal]="total" nzPageSize="10" (nzPageIndexChange)="searchData()"></nz-pagination>
+</div>

@@ -1,0 +1,52 @@
+<div class="card-content">
+  <nz-card>
+<!--    发私信部分-->
+    <div class="card-header">
+      <h2>与{{toNickName}}的私信对话</h2>
+      <a (click)="navigateByUrl('client/tidings/messages')">返回我的私信</a>
+    </div>
+    <div class="send-moudle">
+      <nz-comment>
+        <nz-comment-content>
+          <nz-form-item style="width: 806px">
+            <textarea [(ngModel)]="inputValue" nz-input rows="3" placeholder="请输入私信内容"></textarea>
+          </nz-form-item>
+          <nz-form-item>
+            <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+            发送
+            </button>
+          </nz-form-item>
+        </nz-comment-content>
+      </nz-comment>
+    </div>
+<!--    聊天记录部分-->
+    <div>
+      <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzPagination]="pagination" [nzLoading]="loading" [nzItemLayout]="'horizontal'">
+        <ng-template #item let-item>
+          <nz-list-item>
+            <nz-comment>
+              <nz-avatar [ngClass]="{'avatar-position':(item.fromId == this.userId)}"
+                         nz-comment-avatar nzIcon="user"
+                         [nzSrc]="item.fromSmallAvatar"></nz-avatar>
+              <nz-comment-content (mouseover)="item.needDel=true" (mouseleave)="item.needDel=false">
+                <div [ngClass]="{'message-content-me':(item.fromId == this.userId)}" class="message-content">
+                  <p class="content"><span class="author">{{item.fromNickName}}:</span>{{ item.content }}</p>
+                  <p class="datetime">
+                    {{item.createdTime*1000 | date:'yyyy-MM-dd HH:mm:ss'}}
+                    <a style="float: right; margin-right: 10px; font-size: 14px" *ngIf="item.needDel"
+                       (click)="delMsg(item.messageId, item.messageConversationId)">删除</a>
+                  </p>
+                </div>
+              </nz-comment-content>
+            </nz-comment>
+          </nz-list-item>
+        </ng-template>
+        <ng-template #pagination>
+          <div style="text-align: center">
+            <nz-pagination [nzPageIndex]="pageIndex" [nzPageSize]="pageSize" [nzTotal]= "total" (nzPageIndexChange)="loadIndex($event)"></nz-pagination>
+          </div>
+        </ng-template>
+      </nz-list>
+    </div>
+  </nz-card>
+</div>

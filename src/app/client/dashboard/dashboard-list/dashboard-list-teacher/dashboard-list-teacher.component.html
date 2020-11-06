@@ -1,0 +1,42 @@
+<div class="listview">
+  &nbsp;&nbsp;
+  <h1>教 / 学 / 团 / 队</h1>
+  <h3>名师汇集，保证教学质量与学习效果</h3>
+  <nz-list
+    [nzDataSource]="displayData"
+    [nzRenderItem]="item"
+    [nzGrid]="{ gutter: 24, xs: 12, sm: 12, md: 12, lg: 8, xl: 6 }"
+  >
+    <ng-template #item let-item>
+      <nz-list-item>
+        <nz-card
+          nzHoverable
+          [nzCover]="coverTemplate"
+        >
+          <nz-card-meta
+            [nzTitle]="titleTemplate"
+            [nzDescription]="descripTemplate"
+          ></nz-card-meta>
+        </nz-card>
+        <ng-template #coverTemplate>
+          <nz-avatar
+            (click)="navigateByUrl('/client/userpage/' + item.id)"
+            [nzSize]="100"
+            nzIcon="user"
+            nzSrc="{{item.largeAvatar}}"
+          ></nz-avatar>
+        </ng-template>
+        <ng-template #titleTemplate>
+          <h3 *ngIf="item.isshow">{{ item.nickName }}</h3>
+        </ng-template>
+        <ng-template #descripTemplate>
+          <div *ngIf="item.isshow">{{ item.title }}</div>
+        </ng-template>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+  &nbsp;&nbsp;
+  <button nz-button [nzSize]="'large'" nzType="default" (click)="navigateByUrl('/client/teacher')">
+    更多教师...
+  </button>
+</div>

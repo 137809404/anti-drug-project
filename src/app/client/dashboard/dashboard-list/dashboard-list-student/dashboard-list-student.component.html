@@ -1,0 +1,57 @@
+<div class="listview">
+  &nbsp;&nbsp;
+  <h1>学 / 员 / 动 / 态</h1>
+  <h3>参与小组，结交更多同学，关注课程动态</h3>
+  <div class="list-row">
+    <nz-list
+      [nzDataSource]="comment"
+      nzBordered
+      [nzHeader]="'学员评价'"
+      [nzRenderItem]="item"
+    >
+      <ng-template #item let-item>
+        <nz-list-item>
+          <a (click)="navigateByUrl(item.id)">
+            <nz-avatar
+              nzIcon="user"
+              nzSrc="{{item.avatar}}"
+            ></nz-avatar>
+          </a>
+          &nbsp;&nbsp;
+          <div class="info-column">
+            <div class="first-row">
+              <nz-rate [ngModel]="item.rating" nzDisabled></nz-rate>
+              {{ item.nickName }} 发布于 {{ item.classroomTitle }}
+            </div>
+            <div class="second-row">{{ item.content }}</div>
+          </div>
+          <span class="time">{{ item.createdTime }}</span>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+
+    <nz-list
+      [nzDataSource]="dynamic"
+      nzBordered
+      [nzHeader]="'学员动态'"
+      [nzRenderItem]="item1"
+    >
+      <ng-template #item1 let-item1>
+        <nz-list-item>
+          <a (click)="navigateByUrl(item1.id)">
+            <nz-avatar
+              nzIcon="user"
+              nzSrc="{{item1.avatar}}"
+            ></nz-avatar>
+          </a>
+          &nbsp;&nbsp;
+          <div class="info-column">
+            <div class="first-row">{{ item1.name }}</div>
+            <div class="second-row">开始学习 {{ item1.course }}</div>
+          </div>
+          <span class="time">{{ item1.time }}</span>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </div>
+</div>

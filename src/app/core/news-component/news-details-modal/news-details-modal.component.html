@@ -1,0 +1,105 @@
+<nz-layout>
+
+  <nz-content>
+    <div class="left-content" >
+      <nz-page-header
+        [nzTitle]="displayData?.title" >
+
+        <nz-breadcrumb nz-page-header-breadcrumb>
+          <nz-breadcrumb-item style="cursor: pointer;" (click)="navigateByUrl('/client/newsall')">资讯频道</nz-breadcrumb-item>
+          <nz-breadcrumb-item>
+            <a (click)="navigate(displayData?.categoryid)">{{displayData?.name}}</a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>正文</nz-breadcrumb-item>
+        </nz-breadcrumb>
+        <nz-page-header-content>
+          <div class="wrap">
+            <div class="content">
+              <div class="content">
+                <p class="content-link">
+                  <a>
+                    <i nz-icon [nzType]="'eye'"></i>{{displayData?.hits}}
+                  </a>
+                  <a>
+                    <i nz-icon [nzType]="'message'"></i>{{displayData?.postnum}}
+                  </a>
+                  <a>
+                    <i nz-icon [nzType]="'heart'"></i>{{displayData?.upsnum}}
+                  </a>
+                </p>
+                <p nz-paragraph [innerHTML]="displayData?.body">
+                </p>
+                <p >标签：<span style="color:dodgerblue;cursor: pointer;margin-right: 6px;" *ngFor="let tag of tagList" (click)="navigateByUrl('/client/newstag/'+tag?.id)">{{tag.name}}</span></p>
+                <p class="content-link">
+                  <i nz-icon [nzType]="'heart'" *ngIf="!isLike" style="cursor: pointer;" (click)="getHeart1()"></i>
+                  <i *ngIf="isLike" nz-icon style="cursor: pointer;" [nzType]="'heart'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#eb1f13'" (click)="getHeart0()"></i>
+                  <!-- <i nz-icon style="cursor: pointer;" [nzType]="'share-alt'" nz-popover  [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click"></i>
+                  <ng-template #contentTemplate>
+                    <div>
+                      <i nz-icon [nzType]="'wechat'"></i>
+                      <i nz-icon [nzType]="'weibo'"></i>
+                      <i nz-icon [nzType]="'qq'"></i>
+                    </div>
+                  </ng-template> -->
+                </p>
+                <p>文章评论：</p>
+                <nz-empty *ngIf="comments.length == 0"></nz-empty>
+                <ng-template #commentTemplateRef let-comment="comment">
+                  <nz-comment [nzAuthor]="comment.username" [nzDatetime]="comment.createdtime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'">
+                    <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.useravatar"></nz-avatar>
+                    <nz-comment-content>
+                      <p>{{ comment.content }}</p>
+                    </nz-comment-content>
+                    <nz-comment-action>
+                      <span (click)="addReplyValue(comment)">回复</span>
+                    </nz-comment-action>
+                    <nz-comment-action>
+                      <span (click)="deleteComment(comment.commentId, comment.userid)">删除</span>
+                    </nz-comment-action>
+                    <ng-container *ngIf="comment.reply && comment.reply.length">
+                      <ng-template ngFor let-child [ngForOf]="comment.reply">
+                        <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{comment: child}">
+                        </ng-template>
+                      </ng-template>
+                    </ng-container>
+                  </nz-comment>
+                </ng-template>
+
+                <ng-container *ngIf="comments.length > 0">
+                  <ng-template ngFor let-comment [ngForOf]="comments">
+                    <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{comment: comment}"></ng-template>
+                  </ng-template>
+                </ng-container>
+
+
+                <nz-pagination [nzHideOnSinglePage]="true" [(nzPageIndex)]="pageIndex" [nzTotal]="total" [nzPageSize]="pageSize" (nzPageIndexChange)="getComments()"></nz-pagination>
+                <nz-divider></nz-divider>
+                <nz-comment id="reply">
+                  <nz-comment-content>
+                    <nz-form-item>
+                      <textarea [(ngModel)]="commentValue" nz-input rows="4"></textarea>
+                    </nz-form-item>
+                    <nz-form-item>
+                      <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!commentValue" (click)="handleSubmit()">
+                        发表评论
+                      </button>
+                    </nz-form-item>
+                  </nz-comment-content>
+                </nz-comment>
+              </div>
+            </div>
+          </div>
+        </nz-page-header-content>
+      </nz-page-header>
+
+    </div>
+
+    <div class="right-content">
+
+      <nz-divider nzDashed="true"></nz-divider>
+      <div class="classlist-container">
+        <app-news-classification-modal (detailContent)="getNewContent($event)"></app-news-classification-modal>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>

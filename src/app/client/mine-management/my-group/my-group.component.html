@@ -1,0 +1,32 @@
+<div class="setting-page">
+  <div class="page-header">
+    <h2>我的小组</h2>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="page-content">
+
+    <nz-tabset nzLinkRouter class="computer-style" nzTabPosition="top">
+      <nz-tab>
+        <a nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'main'}" queryParamsHandling="merge">小组主页</a>
+        <app-all-group></app-all-group>
+      </nz-tab>
+      <nz-tab>
+        <a nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'my-manage'}" queryParamsHandling="merge">加入的小组</a>
+        <app-group-join></app-group-join>
+      </nz-tab>
+      <nz-tab>
+        <a nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'post-thread'}" queryParamsHandling="merge">发起的话题</a>
+        <app-topic></app-topic>
+      </nz-tab>
+      <nz-tab>
+          <a nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'reply-thread'}" queryParamsHandling="merge">回复的话题</a>
+          <app-topic-post></app-topic-post>
+      </nz-tab>
+      <nz-tab>
+        <a nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'collect-thread'}" queryParamsHandling="merge">收藏的话题</a>
+        <app-topic-record></app-topic-record>
+      </nz-tab>
+    </nz-tabset>
+
+  </div>
+</div>

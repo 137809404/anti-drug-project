@@ -1,0 +1,26 @@
+<div class="setting-page">
+  <div class="page-header">
+    <h2>我的笔记</h2>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="page-content ">
+    <nz-list  [nzDataSource]="noteList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+      <ng-template #item let-item>
+        <nz-list-item  style="cursor: pointer;"   (click)="navigatTo('client/mine/mynoteDetail/'+ item.courseId)" >
+          <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDesrc" >
+            <ng-template #nzTitle   >
+              {{item.courseSetTitle}}-{{ item.courseTitle }}
+            </ng-template>
+            <ng-template #nzDesrc>
+              <div >共{{ item.noteNum}}篇笔记</div>
+              <div>最后更新{{item.transformedTime}}</div>
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-list-item>
+
+      </ng-template>
+    </nz-list>
+    <nz-divider></nz-divider>
+
+  </div>
+</div>

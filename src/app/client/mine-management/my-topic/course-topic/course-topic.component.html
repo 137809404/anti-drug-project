@@ -1,0 +1,19 @@
+<div class="page-content">
+
+  <nz-list [nzDataSource]="topicList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+    <ng-template #item let-item>
+      <nz-list-item>
+        <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDesrc" >
+          <ng-template #nzTitle>
+          <span class="question-title">{{ item.title }}</span>
+          </ng-template>
+          <ng-template #nzDesrc>
+            <div>来自<span style="cursor: pointer; color: #108ee9" (click)="navigate('/client/classroom/' + item.courseSetId)">{{ item.courseTitle}}-{{item.courseSetTitle}}</span>·浏览量{{item.hitNum}}</div>
+          </ng-template>
+        </nz-list-item-meta>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+  <nz-divider></nz-divider>
+
+</div>

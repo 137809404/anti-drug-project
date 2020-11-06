@@ -1,0 +1,59 @@
+<div class="content">
+  <div class="filter-condition">
+    <div class="time-filter">
+      <nz-range-picker class="time-area"  [(ngModel)]="dateRange" [nzDateRender]="calendarRender" nzShowTime></nz-range-picker>
+      <ng-template #calendarRender let-current>
+        <div class="ant-calendar-date mobile-width">
+          {{ current.getDate() }}
+        </div>
+      </ng-template>
+        <input class="name-containing-input" nz-input placeholder="发信人用户名"   [(ngModel)]="inputSendName" />
+        <input class="name-containing-input" nz-input placeholder="私信内容关键词" [(ngModel)]="inputKey" />
+      <button (click)="filterRecord()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+      <button class="delete-button" nz-button [disabled]="numberOfChecked === 0" [nzType]="'danger'" [nzLoading]="isOperating" (click)="deleteData()"><i nz-icon nzType="delete"></i>删除</button>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <nz-table
+    #ListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()"
+>
+    <thead>
+    <tr>
+      <th
+        nzShowCheckbox
+        [(nzChecked)]="isAllDisplayDataChecked"
+        [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)"
+      ></th>
+      <th>发信人</th>
+      <th>收信人</th>
+      <th>内容</th>
+      <th>发送时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of ListTable.data">
+      <td
+        nzShowCheckbox
+        [(nzChecked)]="mapOfCheckedId[data.messageId]"
+        (nzCheckedChange)="refreshStatus()"
+      ></td>
+      <td style="cursor: pointer;" (click)="showPersonalInfo(data.fromId)">{{data.fromNickName}}</td>
+      <td style="cursor: pointer;" (click)="showPersonalInfo(data.toId)">{{data.toNickName}}</td>
+      <td class="content-column" (click)="unfoldOrFoldContent(data.messageId)">
+        <span class="is-ellipsis" *ngIf="mapOfEllipsis[data.messageId]">{{data.content}}</span>
+        <span class="not-ellipsis" *ngIf="!mapOfEllipsis[data.messageId]">{{data.content}}</span>
+      </td>
+      <td>{{data.createdTimeString}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+</div>

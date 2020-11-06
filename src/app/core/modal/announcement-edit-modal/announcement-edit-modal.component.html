@@ -1,0 +1,22 @@
+<form nz-form [formGroup]="announcementEditForm">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="content">公告内容</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="发布内容不能为空">
+      <quill-editor formControlName="content"></quill-editor>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="releaseTime">发布时间</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="发布时间不能为空">
+      <nz-date-picker nzShowTime
+                      nzFormat="yyyy-MM-dd HH:mm:ss" formControlName="releaseTime"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="programa">结束时间</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="结束时间不能为空">
+      <nz-date-picker nzShowTime
+                      nzFormat="yyyy-MM-dd HH:mm:ss" formControlName="endTime"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+</form>

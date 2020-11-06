@@ -1,0 +1,120 @@
+<div class="overview-page">
+  <h1>计划概览</h1>
+  <nz-divider></nz-divider>
+  <div class="content">
+    <div class="dashboard">
+      <div class="box"><span class="number">0</span>
+        <div class="title">计划学员数</div>
+      </div>
+      <div class="box"><span class="number">0</span>
+        <div class="title">完成人数</div>
+      </div>
+      <div class="box"><span class="number">0</span>
+        <div class="title">任务数</div>
+      </div>
+      <div class="box"><span class="number">0</span>
+        <div class="title">笔记数</div>
+      </div>
+      <div class="box"><span class="number">0</span>
+        <div class="title">提问数</div>
+      </div>
+      <div class="box"><span class="number">0</span>
+        <div class="title">话题数</div>
+      </div>
+    </div>
+    <div>
+      <ul nz-menu nzMode="horizontal">
+        <li nz-menu-item (click)="tabnow=true" [nzSelected]="tabnow">
+          学员详情
+        </li>
+        <li nz-menu-item (click)="tabnow=false" [nzSelected]="!tabnow">
+          任务详情
+        </li>
+      </ul>
+      <div *ngIf="tabnow">
+        <div class="filterDiv">
+          <nz-select ngModel="sortBy">
+            <nz-option nzValue="joinTimeUp" nzLabel="加入时间↑"></nz-option>
+            <nz-option nzValue="joinTimeDown" nzLabel="加入时间↓"></nz-option>
+            <nz-option nzValue="completeRateUp" nzLabel="完成率↑"></nz-option>
+            <nz-option nzValue="completeRateDown" nzLabel="完成率↓"></nz-option>
+          </nz-select>
+          <nz-select ngModel="filter">
+            <nz-option nzValue="ALL" nzLabel="全部"></nz-option>
+            <nz-option nzValue="unfinished" nzLabel="未完成"></nz-option>
+            <nz-option nzValue="SevenUndo" nzLabel="7天未学"></nz-option>
+          </nz-select>
+          <nz-input-group class="searchBox" [nzSuffix]="suffixIconSearch">
+            <input type="text" nz-input placeholder="input search text" />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <i nz-icon nzType="search"></i>
+          </ng-template>
+        </div>
+        <div>
+          <nz-table #nzTable [nzData]="ProgressData" nzTableLayout="fixed">
+            <thead>
+            <tr>
+              <th>姓名</th>
+              <th>学习进度
+                <span class="learnStatus beforeGreen">已学完</span>
+                <span class="learnStatus beforeYellow">学习中</span>
+                <span class="learnStatus beforeGrey">未学</span>
+              </th>
+              <th>完成率</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of nzTable.data">
+              <td>{{ data.name }}</td>
+              <td>
+                <span class="progressBlock green"></span>
+                <span class="progressBlock yellow"></span>
+                <span class="progressBlock grey"></span>
+              </td>
+              <td>{{ data.rate }}%</td>
+            </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+      <div *ngIf="!tabnow">
+        <div class="filterDiv">
+          <nz-input-group class="searchBox" [nzSuffix]="suffixIconSearch">
+            <input type="text" nz-input placeholder="input search text" />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <i nz-icon nzType="search"></i>
+          </ng-template>
+        </div>
+        <div>
+          <nz-table #nzTable [nzData]="ProgressData" nzTableLayout="fixed">
+            <thead>
+            <tr>
+              <th>任务</th>
+              <th>任务进度
+                <span class="learnStatus beforeGreen">已学完</span>
+                <span class="learnStatus beforeYellow">学习中</span>
+                <span class="learnStatus beforeGrey">未学</span>
+              </th>
+              <th>完成率</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of nzTable.data">
+              <td>{{ data.name }}</td>
+              <td>
+                <div class="grey" style="height: 20px;width: 100%;border-radius: 3px">
+                  <div class="inlineDiv green" style="width: 20%"></div>
+                  <div class="inlineDiv yellow" style="width: 20%"></div>
+                </div>
+              </td>
+              <td>{{ data.rate }}%</td>
+            </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

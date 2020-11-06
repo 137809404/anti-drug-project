@@ -1,0 +1,119 @@
+<h1>实名认证</h1>
+<nz-divider></nz-divider>
+<nz-alert nzType={{verificationStatus.nzType}} nzMessage={{verificationStatus.nzMessage}}
+          nzDescription={{verificationStatus.nzDescription}} nzShowIcon nzCloseable>
+</nz-alert>
+<!--<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">-->
+<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" *ngIf="verificationStatus.nzDescription != '认证中'">
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired><span>真实姓名</span></nz-form-label>
+        <div>
+          <nz-form-control [nzErrorTip]="nameErrorTpl">
+<!--            <input type="text" nz-input formControlName="trueName" [disabled]="nameNonEditable">-->
+            <input type="text" nz-input formControlName="trueName" [ngModel]="verifiedName" [disabled]="nameNonEditable">
+            <ng-template #nameErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                请输入真实姓名
+              </ng-container>
+              <ng-container *ngIf="control.hasError('pattern')">
+                请输入汉字姓名
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired><span>身份证号</span></nz-form-label>
+        <div>
+          <nz-form-control [nzErrorTip]="errorTpl">
+            <input type="text" nz-input formControlName="id" [disabled]="nameNonEditable">
+            <ng-template #errorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                请输入身份证号
+              </ng-container>
+              <ng-container *ngIf="control.hasError('pattern')">
+                请输入正确的身份证号
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row class="card-layout">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="请上传身份证正面照">
+          <nz-upload class="avatar-uploader" nzAction="/material/uploadUserFaceIdCard?userId={{userID}}"
+            nzListType="picture-card" [nzShowUploadList]="false"
+            [nzCustomRequest]="faceimgReq" [nzDisabled]="nameNonEditable">
+            <div class="card-upload">
+              <ng-container *ngIf="!faceimg">
+                <i [nzType]="'idcard'" nz-icon class="card-icon"></i>
+                <p>上传身份证正面照</p>
+              </ng-container>
+              <img *ngIf="faceimg" [src]="faceimg" class="avatar" width="320px"/>
+            </div>
+            <input type="hidden" formControlName="faceimg">
+          </nz-upload>
+        </nz-form-control>
+        <p>请上传jpg, gif, png格式的图片, 建议图片大小不超过2MB</p>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="请上传身份证背面照">
+          <nz-upload class="avatar-uploader" nzAction="/material/uploadUserBackIdCard?userId={{userID}}"
+            nzListType="picture-card" [nzShowUploadList]="false"
+            [nzCustomRequest]="backimgReq" [nzDisabled]="nameNonEditable">
+            <div class="card-upload">
+              <ng-container *ngIf="!backimg">
+                <i [nzType]="'idcard'" nz-icon class="card-icon"></i>
+                <p>上传身份证反面照</p>
+              </ng-container>
+              <img *ngIf="backimg" [src]="backimg" class="avatar" width="320px"/>
+            </div>
+            <input type="hidden" formControlName="backimg">
+          </nz-upload>
+        </nz-form-control>
+        <p>请上传jpg, gif, png格式的图片, 建议图片大小不超过2MB</p>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div style="padding: 10px 0px;"><strong style="font-size: 16px;">认证须知</strong></div>
+  <div>
+    <ol>
+      <li>请确保身份证照片清晰可认，严禁PS，否则将由您本人承担相应的法律后果。</li>
+      <li>实名认证成功后，将无法修改和删除实名信息，请谨慎填写。</li>
+      <li>我们将尽快审核您提交的信息，处理完成后您将会收到系统通知。</li>
+    </ol>
+  </div>
+
+  <div style="margin: 20px 0px">
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary"(click)="submitForm()" [disabled]="nameNonEditable">提交</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>
+<div nz-row style="background-color: #e9f3fe" *ngIf="verificationStatus.nzDescription == '认证中'">
+  <div nz-col nzSpan="8" nzOffset="8">
+    <br>
+    <p style="text-align: center;">
+      <i nz-icon nzType="info-circle" nzTheme="outline" style="font-size: 50px;"></i>
+    </p>
+    <br>
+    <h1 align="center">审核中</h1>
+    <p>申请已提交，请耐心等待审核结果</p>
+    <br>
+    <p>真实姓名：{{verifiedName}}</p>
+    <p>身份证号：{{identityCardNumber}}</p>
+  </div>
+</div>

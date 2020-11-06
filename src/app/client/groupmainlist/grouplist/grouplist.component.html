@@ -1,0 +1,31 @@
+  <div class="container">
+  <header>
+    <div class="top" id="top">
+      <nz-card-meta class="word"
+                         [nzTitle]="nzTitle"
+                         [nzAvatar]="nzAvater"
+                         [nzDescription]="nzDescription">
+        <ng-template #nzTitle>
+          <h2 style="display: inline-block; margin-right: 2%;" [innerHTML]="topicList?.groupTitle"></h2>
+          <button *ngIf="!isJoin" nz-button nzType="primary" (click)="joinInGroup()">加入小组</button>
+          <button *ngIf="isJoin" nz-button disabled>已加入该小组</button>
+        </ng-template>
+        <ng-template #nzAvater>
+          <nz-avatar [nzSize]="64" [nzSrc]="topicList?.groupLogo.startsWith('/image')? topicList?.groupLogo: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">  </nz-avatar>
+        </ng-template>
+        <ng-template #nzDescription>
+          <span >{{topicList?.groupMemberNum}}个成员     {{topicList?.groupThreadNum}}个话题      创建时间：{{topicList?.createdTime*1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+        </ng-template>
+      </nz-card-meta>
+    </div>
+  </header>
+  <nz-content>
+    <router-outlet ></router-outlet>
+  </nz-content>
+
+</div>
+
+
+
+
+

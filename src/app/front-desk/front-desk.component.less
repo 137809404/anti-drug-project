@@ -1,0 +1,110 @@
+nz-footer {
+  background-color: #ffffff;
+  text-align: center;
+  padding: 10px 5px;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+}
+
+//header
+
+nz-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  height: calc(100vw / 13);
+  padding: 0;
+  background-color: rgba(212, 240, 222);
+  position: relative;
+}
+
+.background-image {
+  background: url("src/assets/img/nav-autumn.png") no-repeat;
+  height: calc(100vw / 16);
+  width: 100vw;
+  background-size: cover;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+}
+
+.menu {
+  background-color: transparent;
+  position: absolute;
+  right: 2%;
+  top: 18%;
+}
+.user-control {
+  float: right;
+}
+.menu-item {
+  float: left;
+}
+
+@media screen and (max-width: 975px) {
+  .menu {
+    top: 10%;
+  }
+  .menu-item {
+    display: none;
+  }
+
+  .background-image {
+    height: calc(975px / 16);
+    width: 975px;
+  }
+
+  nz-header {
+    height: calc(975px / 13);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .menu {
+    right: 2px;
+  }
+}
+
+//sider
+
+.trigger {
+  font-size: 19px;
+  line-height: 64px;
+  padding: 0 22px;
+  cursor: pointer;
+  transition: color 0.3s;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+@media screen and (min-width: 975px) {
+  .trigger {
+    display: none;
+  }
+}
+
+.nzText {
+  background-color: rgba(51, 68, 84);
+  border-style: none;
+  margin: 15px 0 10px 15px;
+  width: 85%;
+}
+
+//:host ::ng-deep .ant-affix {
+//  left: 90% !important;
+//}
+
+.shadow {
+  -webkit-box-shadow: rgba(0, 0, 0, .3) 0 0 30px 5px;
+  -moz-box-shadow: rgba(0, 0, 0, .3) 0 0 30px 5px;
+  box-shadow: rgba(0, 0, 0, .3) 0 0 30px 5px;
+}
+
+.user-panel {
+  cursor: pointer;
+}
+
+.content-body {
+  min-height: 55em;
+}

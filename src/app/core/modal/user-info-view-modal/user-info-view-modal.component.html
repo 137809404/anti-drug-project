@@ -1,0 +1,62 @@
+<nz-descriptions nzBordered nzSize="small" [nzColumn]="{xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1}">
+  <nz-descriptions-item nzTitle="用户名">
+    <div style="display: flex; flex-direction: row; justify-content: space-between">
+      <span>{{userInfo?.data.nickname}}</span><a (click)="navigateTo('/client/userpage/' + userId)">个人主页</a>
+    </div>
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="生日">
+    {{userInfo?.data.birthday ? userInfo?.data.birthday: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Email">
+    {{userInfo?.data.email ? userInfo?.data.email: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="用户组">
+    <span *ngFor="let role of userInfo?.data.rolesName">{{role}} </span>
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="注册时间/IP">
+    {{userInfo?.data.transformedCreatedTime}} / {{userInfo?.data.createdip}} {{userInfo?.createdarea}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="最近登录时间/IP">
+    {{userInfo?.data.transformedLoginTime}} / {{userInfo?.data.loginip}} {{userInfo?.data.createdarea}}  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="姓名">
+    {{userInfo?.data.trueName ? userInfo?.data.trueName: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="性别">
+    <span *ngIf="userInfo?.data.gender=='secret'">秘密</span>
+    <span *ngIf="userInfo?.data.gender=='male'">男性</span>
+    <span *ngIf="userInfo?.data.gender=='female'">女性</span>
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="身份证号">
+    {{userInfo?.data.idcard ? userInfo?.data.idcard: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="手机号码">
+    {{userInfo?.data.mobile ? userInfo?.data.mobile: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="公司">
+    {{userInfo?.data.company ? userInfo?.data.company: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="职业">
+    {{userInfo?.data.job ? userInfo?.data.job: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="头衔">
+    {{userInfo?.data.iam ? userInfo?.data.iam: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="个人签名">
+    {{userInfo?.data.signature ? userInfo?.data.signature: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="自我介绍">
+    <span id="introduction"></span>
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="个人网站">
+    {{userInfo?.data.site ? userInfo?.data.site: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="微博">
+    {{userInfo?.data.weibo ? userInfo?.data.weibo: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="微信">
+    {{userInfo?.data.weixin ? userInfo?.data.weixin: '暂无'}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="QQ">
+    {{userInfo?.data.qq ? userInfo?.data.qq: '暂无'}}
+  </nz-descriptions-item>
+</nz-descriptions>

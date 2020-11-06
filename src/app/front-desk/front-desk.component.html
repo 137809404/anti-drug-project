@@ -1,0 +1,156 @@
+<nz-layout>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" [nzCollapsedWidth]="0">
+    <ul nz-menu nzMode="inline" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
+      <!-- <input type="text" nz-input class="nzText" placeholder="搜索..." /> -->
+      <div class="user-panel">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="搜索" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+
+      <li nz-menu-item (click)="navigateByUrl('/client')">
+        首页
+      </li>
+
+      <li nz-submenu nzTitle="新闻资讯">
+        <ul>
+          <li nz-menu-item (click)="navigateByUrl('/client/newslaw')">禁毒法规</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/newsnews')">禁毒新闻</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/newscase')">经典案例</li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="禁毒讲堂">
+        <ul>
+          <li nz-menu-item (click)="navigateByUrl('/client/courselist')">课程首页</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/courselist?orderBy=hot')">热门课程</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/courselist?orderBy=recommend')">推荐课程</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/courselist?type_tag=20')">专题讲座</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/courselist?type_tag=26')">教师培训</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/courselist?orderBy=New&type_tag=18')">学堂在线</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/courselist?orderBy=New&type_tag=21')">寓教于乐</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/courselist?orderBy=New&type_tag=20')">专题讲座</li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="热门标签">
+        <ul>
+          <li nz-menu-item (click)="navigateByUrl('/client/newsall')">资讯频道</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/classlist')">禁毒班级</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/openresource')">开放资源</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/teacher')">师资介绍</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/groupmainlist')">小组列表</li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="管理后台" [style.display]="isLogin ? '' : 'none'">
+        <ul>
+          <li nz-menu-item (click)="navigateByUrl('/admin')"
+            [style.display]="checkIdentity('SUPER_ADMIN') ? '' : 'none'">我的后台</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/mine/teachingcourse')"
+            [style.display]="checkIdentity('ROLE_TEACHER') ? '' : 'none'">我的教学</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/mine/mycourse')">我的学习</li>
+        </ul>
+      </li>
+
+      <li nz-menu-item *ngIf="!isLogin" (click)="login()">登录</li>
+      <li nz-menu-item *ngIf="!isLogin" (click)="register()">注册</li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="background-image" (window:resize)="onResize()">
+        <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          (click)="isCollapsed = !isCollapsed"></i>
+        <ul nz-menu nzMode="horizontal" class="menu">
+          <li nz-menu-item class="menu-item" (click)="navigateByUrl('/client')">
+            首页
+          </li>
+
+          <li nz-submenu nzTitle="新闻资讯" class="menu-item">
+            <ul>
+              <li nz-menu-item (click)="navigateByUrl('/client/newsall')">资讯频道</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/newslaw')">禁毒法规</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/newsnews')">禁毒新闻</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/newscase')">经典案例</li>
+            </ul>
+          </li>
+
+          <li nz-submenu nzTitle="热门标签" class="menu-item">
+            <ul>
+              <li nz-menu-item (click)="navigateByUrl('/client/teacher')">师资介绍</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/groupmainlist')">小组列表</li>
+              <li nz-menu-group nzTitle="禁毒讲堂">
+                <ul>
+                  <li nz-menu-item (click)="navigateByUrl('/client/courselist')">全部课程</li>
+                  <li nz-menu-item (click)="navigateByUrl('/client/courselist?orderBy=New&type_tag=18')">学堂在线</li>
+                  <li nz-menu-item (click)="navigateByUrl('/client/courselist?orderBy=New&type_tag=21')">寓教于乐</li>
+                  <li nz-menu-item (click)="navigateByUrl('/client/courselist?orderBy=New&type_tag=20')">专题讲座</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li nz-submenu nzTitle="搜索" class="menu-item">
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+              <input type="text" nz-input placeholder="搜索" [(ngModel)]="keyword" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+              <i nz-icon nzType="search" (click)="search()"></i>
+            </ng-template>
+          </li>
+
+          <li nz-menu-item *ngIf="!isLogin" (click)="login()" class="menu-item">
+            登录
+          </li>
+          <li nz-menu-item *ngIf="!isLogin" (click)="register()" class="menu-item">
+            注册
+          </li>
+
+          <li nz-submenu *ngIf="isLogin" nzTitle="管理后台" class="menu-item">
+            <ul>
+              <li nz-menu-item (click)="navigateByUrl('/admin')"
+                [style.display]="checkIdentity('ADMIN') ? '' : 'none'">我的后台</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/mine/teachingcourse')"
+                [style.display]="checkIdentity('TEACHER') ? '' : 'none'">我的教学</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/mine/mycourse')">我的学习</li>
+            </ul>
+          </li>
+
+          <li *ngIf="isLogin" class="user-control">
+            <app-front-notification (navigateEvent)="navigateByUrl($event)">
+            </app-front-notification>
+            &nbsp;
+            <app-front-avatar #frontAvatar (logoutEvent)="logout()" (navigateEvent)="navigateByUrl($event)">
+            </app-front-avatar>
+          </li>
+        </ul>
+      </div>
+    </nz-header>
+    <nz-content class="content-body">
+      <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer>Powered by dongdong v8.2.32 ©2017-2019 课程存档<br />
+      课程内容版权均归 中国刑事警察学院禁毒学系 所有 辽ICP备14018221号
+    </nz-footer>
+  </nz-layout>
+</nz-layout>
+
+<nz-affix *ngIf="!isHide" [nzOffsetBottom]="50" style="margin-left: 5%;">
+  <button class="shadow" nz-button nzType="danger" nzSize="large" nzShape="circle" nz-popover nzPopoverTitle="查看新公告"
+    [(nzVisible)]="isShow" nzPopoverTrigger="click" [nzPopoverContent]="announcementTemplate" nzPopoverPlacement="top">
+    <i nz-icon nzType="notification"></i>
+  </button>
+</nz-affix>
+
+<ng-template #announcementTemplate>
+  <div *ngFor="let announcement of announcementList">
+    <div [innerHTML]="announcement.content"></div>
+    <nz-divider></nz-divider>
+  </div>
+  <div style="display: flex; flex-direction: row; justify-content: space-between"><a (click)="close()">确认</a><a
+      (click)="cancel()">隐藏</a></div>
+</ng-template>

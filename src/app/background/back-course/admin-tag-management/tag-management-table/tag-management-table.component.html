@@ -1,0 +1,40 @@
+<div class="content">
+  <div class="filter-condition">
+    <div>
+      <h2 style="margin-left: 20px">标签管理
+        <button nz-button nzType="danger" class="create-button" (click)="openCreateTagModal()"><i nz-icon nzType="plus"></i>新增标签</button>
+      </h2>
+    </div>
+  </div>
+  <nz-divider [nzText]="'标签总数： ' + displayData.length"></nz-divider>
+  <nz-table
+    #tagListTable
+    [nzData]="displayData"
+    [nzShowPagination]="false">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>名称</th>
+      <th>所属标签组</th>
+      <th>添加时间</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of tagListTable.nzData">
+      <td>{{data.id}}</td>
+      <td>{{data.name}}</td>
+<!--      标签组id？-->
+      <td>{{data.tagGroupName}}</td>
+      <td>{{data.createdtime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="edit(data)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
+          <div><span (click)="delete(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

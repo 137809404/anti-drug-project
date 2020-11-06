@@ -1,0 +1,43 @@
+<nz-layout>
+
+  <nz-header>
+    <h1 class="classlist_title">所有教师</h1>
+    <div class="empty-space"></div>
+  </nz-header>
+
+  <ng-container>
+    <div style="text-align: center">
+      <nz-list [nzDataSource]="displayData" style="margin:30px" [nzRenderItem]="item"
+        [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+        <ng-template #item let-item>
+          <nz-list-item [nzContent]="nzContent">
+            <ng-template #nzContent>
+              <nz-card (mouseover)="show1(item)" (mouseleave)="show2(item)" nzHoverable
+                style="width:240px;height:350px;margin: 30px" [nzCover]="coverTemplate">
+                <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=descripTemplate></nz-card-meta>
+                <button nz-button nzType="primary" style="text-align: center" *ngIf="!item.isshow&&!item.isfollowed"
+                  (click)="follow_submit(item.id)">关注</button>
+                <button *ngIf="!item.isshow&&item.isfollowed" nz-button nzType="default" style="text-align: center"
+                  (click)="del_follow_submit(item.id)">取消关注</button>
+                <button *ngIf="item.isshow&&item.isfollowed" nz-button nzType="default" style="text-align: center">已关注</button>
+              </nz-card>
+              <ng-template #coverTemplate>
+                <nz-avatar (click)="navigateByUrl('/client/userpage/'+item.id+ '/focus')" [nzSize]="100"
+                  style="text-align:center;margin:60px auto;" nzIcon="user" nzSrc="{{item.largeAvatar}}"></nz-avatar>
+              </ng-template>
+              <ng-template #titleTemplate>
+                <h3 *ngIf="item.isshow">{{item.nickName}}</h3>
+                <div *ngIf="item.isshow">{{item.title}}</div>
+              </ng-template>
+            </ng-template>
+          </nz-list-item>
+        </ng-template>
+        <nz-pagination [(nzPageIndex)]="pageIndex" [nzTotal]="total" (nzPageIndexChange)="changePageIndex($event)"
+          [nzPageSize]="pageSize"></nz-pagination>
+      </nz-list>
+    </div>
+
+  </ng-container>
+
+
+</nz-layout>

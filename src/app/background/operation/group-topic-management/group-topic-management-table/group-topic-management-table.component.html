@@ -1,0 +1,87 @@
+<div class="content">
+  <div class="filter-condition">
+    <nz-select class="select-control" [(ngModel)]="selectedStateFilterValue" nzPlaceHolder="小组状态">
+      <nz-option nzValue="" nzLabel="全部状态"></nz-option>
+      <nz-option nzValue="open" nzLabel="开启"></nz-option>
+      <nz-option nzValue="close" nzLabel="关闭"></nz-option>
+    </nz-select>
+    <input class="name-containing-input" nz-input placeholder="小组名" [(ngModel)]="groupName" />
+    <input class="name-containing-input" nz-input placeholder="组长" [(ngModel)]="leader" />
+    <button (click)="filterTopicTable()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    <nz-divider nzType="vertical"></nz-divider>
+    <button (click)="createNewGroup(createGroupModal)" nz-button nzType="danger" class="create-button"><i nz-icon nzType="plus"></i>添加小组</button>
+  </div>
+  <nz-table
+    #topicTableListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>名称</th>
+      <th>组长</th>
+      <th>成员数</th>
+      <th>话题数</th>
+      <th>回复数</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let data of topicTableListTable.data">
+      <td>{{data.groupId}}</td>
+      <td style="color: #108ee9; cursor: pointer;" (click)="navigateTo('client/groupmainlist/'+ data.groupId)">{{data.groupTitle}}</td>
+      <td style="color: #108ee9; cursor: pointer;" (click)="viewUserInfo(data.userId)">{{data.groupOwnerName}}</td>
+      <td>{{data.groupMemberNum}}</td>
+      <td>{{data.groupThreadNum}}</td>
+      <td>{{data.groupPostNum}}</td>
+      <td>{{data.groupStatus == 'open'? '开放': '关闭'}}</td>
+      <td><i class="more-operation" nz-popover [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="navigateTo('client/groupmainlist/'+ data.groupId)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看小组</span></div>
+          <div>
+            <span *ngIf="data.groupStatus == 'open'" (click)="closeGroup(data.groupId)"><i nz-icon nzType="close" nzTheme="outline"></i>关闭小组</span>
+            <span *ngIf="data.groupStatus == 'close'" (click)="openGroup(data.groupId)"><i nz-icon nzType="check" nzTheme="outline"></i>开启小组</span>
+          </div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+  </nz-table>
+  <ng-template #rolesCheckBox>
+    <nz-checkbox-group [(ngModel)]="checkOption"></nz-checkbox-group>
+  </ng-template>
+
+  <ng-template #createGroupModal>
+    <form nz-form [formGroup]="newGroupForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="groupName">名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="名称不能为空">
+          <input nz-input formControlName="groupName" id="groupName" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <div class="introduction-edit-area" nz-row>
+      <span style="text-align: right; color: rgba(0, 0, 0, .85);" nz-col nzSpan="6">小组介绍： </span>
+      <quill-editor nz-col nzSpan="14" [(ngModel)]="introductionContent"></quill-editor>
+    </div>
+  </ng-template>
+
+  <ng-template #setNewLeader>
+    <form nz-form [formGroup]="newGroupForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="leaderName">组长名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="名称不能为空">
+          <input nz-input formControlName="groupName" id="leaderName" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+</div>

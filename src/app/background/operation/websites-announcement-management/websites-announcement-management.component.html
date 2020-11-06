@@ -1,0 +1,47 @@
+<div style="padding: 20px 0;" class="content">
+  <div class="filter-condition">
+    <div>
+      <h2>全站站内通知管理
+        <button nz-button nzType="danger" class="create-button" (click)="openCreateAnnouncementModal()"><i nz-icon nzType="plus"></i>新增公告</button>
+      </h2>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <nz-table
+    #classListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>公告内容</th>
+      <th>发布时间</th>
+      <th>结束时间</th>
+      <th>状态</th>
+      <th>发布人</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of classListTable.data">
+      <td><div style="padding-top: 1em" [innerHTML]="data.content"></div></td>
+      <td>{{data.startTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+      <td>{{data.endTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+      <td>{{data.status}}
+      <td>{{data.nickname}}</td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="edit(data)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
+          <div><span (click)="delete(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+
+  </nz-table>
+</div>>
