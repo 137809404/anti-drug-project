@@ -33,7 +33,7 @@
           </div>
         </div>
       </td>
-      <td>{{ data.progress }}(<a (click)="showProgress(progressInfo)">查看详情</a>)</td>
+      <td>{{ data.seq }}%(<a (click)="showProgress(progressInfo,data.id)">查看详情</a>)</td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
@@ -79,15 +79,15 @@
           <div class="report-card">
             <div class="report-card-header">
               >
-              <span class="include">  作业:0/0&nbsp;&nbsp;&nbsp;考试:1/1</span>
+              <span class="include">  作业:{{studentDetail.finishhomework}}/{{studentDetail.allhomeworkNum}}&nbsp;&nbsp;&nbsp;考试:{{studentDetail.finishtest}}/{{studentDetail.allTestNum}}</span>
             </div>
-            <div class="report-card-main">
+            <div class="report-card-main" *ngFor="let item of studentDetail.TestResults">
               <div class="card-main-title">
                 <i nz-icon nzType="file-text" nzTheme="outline"></i>
-                考试：阶段性测评
+                考试：{{item.paperName}}
                 <span class="score">
-                      <span style="font-size: 25px">90.0</span>
-            分 / 100.0分
+                      <span style="font-size: 25px">{{item.score}}</span>
+            分 / {{item.fullscore}}分
                   </span>
               </div>
             </div>
@@ -97,22 +97,22 @@
         <div class="dashboard">
           <div class="box">
             <div class="title">发起提问</div>
-            <span class="number">0</span>
+            <span class="number">{{studentProgress.CourseQuestionNum}}</span>
             <i class="proIcon" nz-icon nzType="question" nzTheme="outline"></i>
           </div>
           <div class="box">
             <div class="title">参加活动</div>
-            <span class="number">0</span>
+            <span class="number">{{studentProgress.learnedNum}}</span>
             <i class="proIcon" nz-icon nzType="flag" nzTheme="outline"></i>
           </div>
           <div class="box">
             <div class="title">发起话题</div>
-            <span class="number">0</span>
+            <span class="number">{{studentProgress.CourseThreadPostNum}}</span>
             <i class="proIcon" nz-icon nzType="message" nzTheme="outline"></i>
           </div>
           <div class="box">
             <div class="title">回复话题</div>
-            <span class="number">0</span>
+            <span class="number">{{studentProgress.CourseDiscussionNum}}</span>
             <i class="proIcon" nz-icon nzType="solution" nzTheme="outline"></i>
           </div>
         </div>

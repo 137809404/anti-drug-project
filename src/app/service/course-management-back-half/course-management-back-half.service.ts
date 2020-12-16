@@ -244,4 +244,11 @@ export class CourseManagementBackHalfService {
   uploadExcel(file: FormData){
     return this._http.post(`/login/doRegisterFromExcel`, file)
   }
+
+  getStudentProgress(courseId: any, userId: any): Observable<any> {
+    return this._http.get(`/teachingPlan/getStudydetail?courseId=${courseId}&userId=${userId}`)
+  }
+  getStudentscore(courseId: any, userId: any): Observable<any> {
+    return this._http.get(`/teachingPlan/getTestdetail?courseId=${courseId}&userId=${userId}`)
+  }
 }

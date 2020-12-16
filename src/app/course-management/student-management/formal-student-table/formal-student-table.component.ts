@@ -32,6 +32,8 @@ export class FormalStudentTableComponent implements OnInit, OnChanges {
 
   isSpinning = false;
 
+  studentProgress = {};
+  studentDetail = {};
 
   constructor(
     private routerInfo: ActivatedRoute,
@@ -108,7 +110,6 @@ export class FormalStudentTableComponent implements OnInit, OnChanges {
   }
 
   searchData(pageIndex: number = this.pageIndex) {
-
     this.loading = true;
     this.courseManagement$.getTeachingPlanStudent(this.planId, 8, pageIndex, this.name).subscribe(result => {
       this.loading = false;
@@ -233,7 +234,23 @@ export class FormalStudentTableComponent implements OnInit, OnChanges {
     console.log(data)
   }
 
-  showProgress(template: TemplateRef<any>) {
+  showProgress(template: TemplateRef<any>, userId: number) {
+    this.courseManagement$.getStudentProgress( this.planId, userId).subscribe(result => {
+      this.studentProgress = result.data;
+    }, error1 => {
+      this._notification.error(
+        '出错！',
+        `${error1.error}`
+      )
+    })
+    this.courseManagement$.getStudentscore( this.planId, userId).subscribe(result => {
+      this.studentDetail = result.data;
+    }, error1 => {
+      this._notification.error(
+        '出错！',
+        `${error1.error}`
+      )
+    })
     this._modal.create({
       nzTitle: '进度详情',
       nzContent: template,
